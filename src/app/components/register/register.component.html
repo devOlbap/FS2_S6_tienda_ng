@@ -1,0 +1,77 @@
+<article id="user_form_div" class="container" >
+
+    <div class="card ">
+        <div class="card-header">
+            <h2>Registrate!</h2>
+            <h2 class="text-center">Formulario de Registro</h2>
+
+        </div>
+        <form class="row g-3" >
+            <div class="col-md-6">
+                <label for="nombres" class="form-label">Nombres</label>
+                <input type="text" class="form-control" id="nombres">
+            </div>
+            <div class="col-md-6">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="apellidos">
+            </div>
+            <div class="col-md-6">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="col-md-6">
+                <label for="pass" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="pass">
+            </div>
+            <div class="col-md-6">
+                <label for="repet_pass" class="form-label">Repite Contraseña</label>
+                <input type="password" class="form-control" id="repet_pass">
+            </div>
+            <div class="col-12">
+                <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fecha_nacimiento" >
+            </div>
+            <div class=" container card-header">
+                <h4>Dirección de despacho</h4><p>(Opcional)</p>
+                
+            </div>
+            <div class="col-md-9">
+                <label for="direccion" class="form-label">Calle</label>
+                <input type="text" class="form-control" id="direccion" >
+            </div>
+            <div class="col-md-3">
+                <label for="numeracion" class="form-label">Numeracion</label>
+                <input type="text" class="form-control" id="numeracion" >
+            </div>
+            <div class="col-md-9">
+                <label for="comuna" class="form-label">Comuna</label>
+                <select id="comuna" class="form-control" >
+                    <option value="" selected disabled>...</option>
+                    <option value="santiago">Santiago</option>
+                </select>
+            </div>
+        </form>
+        <div class="card-footer">
+            <div class="col-6">
+                <button type="button" onclick="registrarUsuario()" class="btn btn-success">Registrar</button>
+            </div>
+            <div class="col-6">
+                <button onclick="limpiarFormulario()" class="btn btn-outline-warning" >Limpiar Formulario</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    
+    
+</article>

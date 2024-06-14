@@ -1,0 +1,63 @@
+  
+  <article id="productos_div" class="container" >
+    <div class="card ">
+        <div class="card-header">
+            <h2 class="text-center">Formulario de Registro</h2>
+
+        </div>
+        <form class="row g-3" >
+            <div class="col-md-6">
+                <label for="nombre_producto" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre_producto">
+            </div>
+            <div class="col-md-6">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="descripcion">
+            </div>
+            <div class="col-md-3">
+                <label for="valor" class="form-label">Valor</label>
+                <input type="text" class="form-control" id="valor">
+            </div>
+            <div class="col-md-9">
+                <label for="img_path" class="form-label">Ruta img</label>
+                <input type="text" class="form-control" id="img_path">
+            </div>
+            
+        </form>
+        <div class="card-footer">
+            <div class="col-6">
+                <button type="button" onclick="registrarProducto()" class="btn btn-success">Registrar</button>
+            </div>
+            <div class="col-6">
+                <button onclick="limpiarFormularioProducto()" class="btn btn-outline-warning" >Limpiar Formulario</button>
+            </div>
+        </div>
+    </div>
+    <br><hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Productos</h2>
+        </div> 
+        <div class="card-body table-responsive">
+            <table id="productos_adm_table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Accion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+        <!-- <div class="card-footer">
+
+        </div> -->
+    </div>
+</article>
