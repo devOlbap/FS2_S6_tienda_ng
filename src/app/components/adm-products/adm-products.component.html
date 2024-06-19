@@ -51,6 +51,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr *ngFor="let producto of productos">
+                        <th scope="row">{{producto.id}}</th>
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.descripcion}}</td>
+                        <td>{{formatNumberToCurrency(producto.valor)}}</td>
+                        <td><button class="btn btn-outline-success" > Ver</button></td>
+                    </tr>
+
                 </tbody>
 
             </table>
