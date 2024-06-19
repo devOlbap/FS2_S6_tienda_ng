@@ -21,6 +21,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -28,12 +29,12 @@
             ],
             "styles": [
               "src/styles.css",
-              "assets/css/style.css",
+              "src/assets/css/style.css",
               "../node_modules/bootstrap/scss/bootstrap.scss",
               "../node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
-              "assets/js/script.js",
+              "src/assets/js/script.js",
               "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
             "server": "src/main.server.ts",
