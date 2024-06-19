@@ -8,14 +8,30 @@
     <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css"> -->
+  <style>
 
+    footer {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  </style>
 </head>
 <body>
-
-  <app-root></app-root>
-  <footer>
-    <p>Derechos de autor &copy; 2024 GameStore App</p>
-  </footer>
+  <div class="wrapper">
+    <main>
+      <app-root></app-root>
+    </main>
+    <footer>
+      <p>Derechos de autor &copy; 2024 GameStore App</p>
+    </footer>
+  </div>
+  
   <div id="loading">
     <div class="spinner"></div>
   </div>
