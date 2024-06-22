@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { UserServiceService } from '../../service/user/user-service.service';
 import { User } from '../../model/user';
 import { Rol } from '../../model/rol';
+import { ProductServiceService } from '../../service/product/product-service.service';
 
 @Component({
   selector: 'app-nav',
@@ -32,7 +33,10 @@ export class NavComponent {
 
   };
 
-  constructor(private userService: UserServiceService){}
+  constructor(
+    private userService: UserServiceService,
+    private productService: ProductServiceService
+  ){}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -50,6 +54,7 @@ export class NavComponent {
   logout() {
     // Lógica para cerrar sesión
     this.userService.logout();
+    this.productService.cleanCarrito();
     // Redirigir a la página de inicio de sesión
   }
   
