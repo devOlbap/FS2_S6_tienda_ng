@@ -1,38 +1,49 @@
-  
+<app-nav></app-nav>
   <article id="productos_div" class="container" >
-    <div class="card ">
+    <div class="card">
         <div class="card-header">
-            <h2 class="text-center">Formulario de Registro</h2>
-
+          <h2 class="text-center">Formulario de Registro</h2>
         </div>
-        <form class="row g-3" >
-            <div class="col-md-6">
-                <label for="nombre_producto" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre_producto">
+        <form [formGroup]="productoForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+            <div *ngIf="productoForm.get('nombre')?.invalid && productoForm.get('nombre')?.touched">
+              <small class="text-danger">El nombre es obligatorio.</small>
             </div>
-            <div class="col-md-6">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <input type="text" class="form-control" id="descripcion">
+          </div>
+          <div class="col-md-6">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+            <div *ngIf="productoForm.get('descripcion')?.invalid && productoForm.get('descripcion')?.touched">
+              <small class="text-danger">La descripción es obligatoria.</small>
             </div>
-            <div class="col-md-3">
-                <label for="valor" class="form-label">Valor</label>
-                <input type="text" class="form-control" id="valor">
+          </div>
+          <div class="col-md-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="text" class="form-control" id="valor" formControlName="valor">
+            <div *ngIf="productoForm.get('valor')?.invalid && productoForm.get('valor')?.touched">
+              <small class="text-danger">El valor es obligatorio.</small>
             </div>
-            <div class="col-md-9">
-                <label for="img_path" class="form-label">Ruta img</label>
-                <input type="text" class="form-control" id="img_path">
+          </div>
+          <div class="col-md-9">
+            <label for="img_path" class="form-label">Ruta img</label>
+            <input type="text" class="form-control" id="img" formControlName="img">
+            <div *ngIf="productoForm.get('img')?.invalid && productoForm.get('img')?.touched">
+              <small class="text-danger">La ruta de la imagen es obligatoria.</small>
             </div>
-            
+          </div>
+          <div class="card-footer">
+            <div class="col-6">
+              <button type="submit" class="btn btn-success" [disabled]="productoForm.invalid">Registrar</button>
+            </div>
+            <div class="col-6">
+              <button type="button" (click)="limpiarFormularioProducto()" class="btn btn-outline-warning">Limpiar Formulario</button>
+            </div>
+          </div>
         </form>
-        <div class="card-footer">
-            <div class="col-6">
-                <button type="button" onclick="registrarProducto()" class="btn btn-success">Registrar</button>
-            </div>
-            <div class="col-6">
-                <button onclick="limpiarFormularioProducto()" class="btn btn-outline-warning" >Limpiar Formulario</button>
-            </div>
-        </div>
-    </div>
+      </div>
+      
     <br><hr>
     <div class="card">
         <div class="card-header">
