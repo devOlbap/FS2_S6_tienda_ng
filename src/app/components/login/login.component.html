@@ -1,20 +1,30 @@
+<app-nav></app-nav>
+
 <div class="card">
-    <div class="card-header">
-        <h2>Inicia Sesión</h2>
-    </div>
-    <div class="card-body">
-        <form class="row g-3">
-            <div class="col-md-6">
-                <label for="username" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control" id="username">
-            </div>
-            <div class="col-md-6">
-                <label for="pass" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password">
-            </div>                       
-        </form>
-    </div>
-    <div class="card-footer">
-        <button type="button" onclick="accederUsuario()" class="btn btn-success">Acceder</button>
-    </div>
+    <form class="row g-3" [formGroup]="loginForm" (ngSubmit)="login()">
+
+        <div class="card-header">
+            <h2>Inicia Sesión</h2>
+        </div>
+        <div class="card-body">
+                <div class="col-md-6">
+                    <label for="username" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="username" formControlName="username">
+                    <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+                        <small class="text-danger">El nombre de usuario es obligatorio.</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="pass" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" formControlName="password">
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                        <small class="text-danger">La contraseña es obligatoria.</small>
+                    </div>
+                </div>            
+        </div>
+        <div class="card-footer">
+            <button type="submit"  class="btn btn-success">Acceder</button>           
+        </div>
+    </form>
+
 </div>

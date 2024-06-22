@@ -2,13 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup , ReactiveFormsModule, Validators} from '@angular/forms';
+import { UserServiceService } from '../../service/user/user-service.service';
+import { Router } from '@angular/router';
+import { NavComponent } from '../nav/nav.component';
 
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NavComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -16,22 +19,36 @@ export class LoginComponent {
 
   loginForm !:FormGroup;
 
-  constructor(private fb: FormBuilder){}
+  constructor(
+    private fb: FormBuilder, 
+    private userService: UserServiceService,
+    private router:Router
+  ){}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    
     this.loginForm = this.fb.group({
       username:['',Validators.required],
-      password:['',[Validators.required,Validators.email]]
+      password:['',[Validators.required, Validators.minLength(8)]]
     })
     
   }
 
-  login(){
+  login() {
+
     if(this.loginForm.valid){
-      console.log('Formulario valido:'+ this.loginForm.get('username')!.value );
+      const user = this.userService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+      if (user) {
+        
+        this.router.navigate(['/home']);
+        alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
+      } else {
+        alert('Credenciales inválidas. Inicio de sesión fallido.');
+      }
     }
+
+
+    
   }
 
 }
