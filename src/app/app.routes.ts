@@ -7,6 +7,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { AdmUsersComponent } from './components/adm-users/adm-users.component';
 import { AdmProductsComponent } from './components/adm-products/adm-products.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 
 
 
@@ -18,7 +19,7 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'adm-users', component: AdmUsersComponent },
     { path: 'adm-products', component: AdmProductsComponent },
-
+    { path: 'recover-password', component: RecoverPasswordComponent },
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent }
