@@ -1,13 +1,15 @@
+<app-nav></app-nav>
 <article id="products_div" class="container" >
     <h2>Productos </h2>
     <div class="product-gallery" id="productos_list">
-        <!-- <div class="product-item">
-            <img src="assets/img/carcasa_iphone_6.jpg" alt="Producto 1">
-            <h3>Iphone 6 Case</h3>
-            <p>"phone case" para teléfono iphone</p>
-            <p>$ 5.000.-</p>
-            <button>Comprar</button>
-        </div> -->
+        <div class="product-item" *ngFor="let producto of productos" >
+            <img ngSrc="assets/img/{{producto.img}}" width="350" height="150" alt="Producto 1">
+            <h3>{{producto.nombre}}</h3>
+            <p>{{producto.descripcion}}</p>
+            <p>{{formatNumberToCurrency(producto.valor)}}</p>
+            <button class="btn btn-success" *ngIf="!isInCart(producto.id)" (click)="addToCart(producto.id)"  id="btn_comprar">Comprar</button>
+            <button class="btn btn-outline-info" *ngIf="isInCart(producto.id)" (click)="viewCart()"  id="btn_ver_carrito">Ver Carrito</button>
+        </div>
         
         
     </div>
