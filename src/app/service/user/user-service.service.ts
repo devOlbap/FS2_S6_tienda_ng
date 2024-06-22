@@ -83,7 +83,14 @@ export class UserServiceService {
     this.userLogSubject = new BehaviorSubject<User | undefined>(this.userLog);
     this.userLog$ = this.userLogSubject.asObservable();
   }
-
+  updatePassword(username: string, newPassword: string): boolean {
+    const userIndex = this.users.findIndex(user => user.username === username);
+    if (userIndex !== -1) {
+      this.users[userIndex].pass = newPassword;
+      return true;
+    }
+    return false;
+  }
   getUsers(): User[] {
     return this.users;
   }
