@@ -1,3 +1,5 @@
+
+<app-nav></app-nav>
 <article id="carrito_div" class="container"  >
     <div class="card">
         <div class="card-header">
@@ -15,10 +17,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
+                    <tr *ngFor="let producto of productos">
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.descripcion}}</td>
+                        <td>{{producto.valor}}</td>
+                        <td><button class="btn btn-outline-danger" (click)="quitarProducto(producto.id)" > Quitar</button></td>
+                    </tr>
                 </tbody>
 
             </table>
-            <h3 id="text_carrito" class="text-center" >Sin productos :(</h3>
+            <h3 *ngIf="productos.length === 0" id="text_carrito" class="text-center" >Sin productos :(</h3>
 
         </div>
         <!-- <div class="card-footer">
