@@ -34,7 +34,7 @@ export class AdmProductsComponent {
   productos: Product[] = [];
 
   ngOnInit(): void {
-    this.productos = this.productService.getProducts();
+    this.getProductos();
   }
 
   constructor(private productService: ProductServiceService, private fb : FormBuilder) { 
@@ -46,13 +46,17 @@ export class AdmProductsComponent {
       img:['',Validators.required]
     })
   }
-
+  getProductos(){
+    this.productos = this.productService.getProducts();
+  }
   onSubmit(){
     if(this.productoForm.valid){
 
       this.productoForm.get('id')?.setValue(this.productos.length+1, { emitEvent: false });
       
       this.productService.addProduct(this.productoForm.value);
+
+      this.getProductos();
       // console.log(this.productoForm.value)
     }
   }

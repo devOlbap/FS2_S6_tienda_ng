@@ -3,7 +3,7 @@
     <h2>Productos </h2>
     <div class="product-gallery" id="productos_list">
         <div class="product-item" *ngFor="let producto of productos" >
-            <img ngSrc="assets/img/{{producto.img}}" width="350" height="150" alt="Producto 1">
+            <img priority ngSrc="assets/img/{{producto.img}}" width="350" height="150" alt="Producto 1">
             <h3>{{producto.nombre}}</h3>
             <p>{{producto.descripcion}}</p>
             <p>{{formatNumberToCurrency(producto.valor)}}</p>

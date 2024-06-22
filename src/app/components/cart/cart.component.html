@@ -1,6 +1,11 @@
 
 <app-nav></app-nav>
 <article id="carrito_div" class="container"  >
+    <br>
+    <div class="" >
+        <button class="btn btn-outline-info" (click)="backToProducts()" >  Volver a Productos</button>
+    </div>
+    <br>
     <div class="card">
         <div class="card-header">
             <h2>Carrito de compras</h2>
@@ -21,7 +26,7 @@
                     <tr *ngFor="let producto of productos">
                         <td>{{producto.nombre}}</td>
                         <td>{{producto.descripcion}}</td>
-                        <td>{{producto.valor}}</td>
+                        <td>{{formatNumberToCurrency(producto.valor)}}</td>
                         <td><button class="btn btn-outline-danger" (click)="quitarProducto(producto.id)" > Quitar</button></td>
                     </tr>
                 </tbody>

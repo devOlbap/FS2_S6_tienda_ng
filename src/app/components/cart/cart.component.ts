@@ -5,6 +5,13 @@ import { ProductServiceService } from '../../service/product/product-service.ser
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
+function formatNumberToCurrency(number: number): string {
+  let formattedNumber = number.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+  formattedNumber = formattedNumber.replace('CLP', '').trim();
+  return formattedNumber;
+}
+
+
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -15,7 +22,8 @@ import { Router } from '@angular/router';
 export class CartComponent {
 
   productos : Product [] =[];
-
+  //Función para formatear números
+  formatNumberToCurrency = formatNumberToCurrency;
   constructor(
     private productService: ProductServiceService,
     private router: Router
@@ -36,6 +44,8 @@ export class CartComponent {
     // this.productos = this.productos.filter(producto => producto.id === id);
   }
 
-  
+  backToProducts(){
+    this.router.navigate(['/products'])
+  }
 
 }
