@@ -3,47 +3,62 @@
 
     <div class="card ">
         <div class="card-header">
-            <h2 class="text-center">Formulario de Registro</h2>
+            <h2>Usuario</h2>
 
         </div>
-        <form class="row g-3" >
+        <form class="row g-3" [formGroup]="userForm" (ngSubmit)="submit()" >
             <div class="col-md-6">
                 <label for="nombres" class="form-label">Nombres</label>
-                <input type="text" class="form-control" id="nombres_input">
+                <input type="text" class="form-control" id="nombres" formControlName="nombres">
+                <div *ngIf="userForm.get('nombres')?.invalid && userForm.get('nombres')?.touched">
+                        <small class="text-danger">El nombre es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="apellidos" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos_input">
+                <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
+                <div *ngIf="userForm.get('apellidos')?.invalid && userForm.get('apellidos')?.touched">
+                        <small class="text-danger">El apellido es obligatorio.</small>
+                    </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label for="username" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control" id="username_input">
-            </div>
-            <div class="col-md-3">
-                <label for="username" class="form-label">ROL</label>
-                <select class="form-control" name="rol_select" id="rol_select">
-                    <option value="99" selected disabled>...</option>
-                    <option value="1">Administrador</option>
-                    <option value="2">Usuario</option>
-                    <option value="3">Cliente</option>
-
-                </select>
+                <input type="text" class="form-control" id="username" formControlName="username">
+                <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+                        <small class="text-danger">El nombre de usuario es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email_input">
+                <input type="email" class="form-control" id="email" formControlName="correo">
+                <div *ngIf="userForm.get('correo')?.invalid && userForm.get('correo')?.touched">
+                        <small class="text-danger">El correo es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="pass" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="pass_input">
+                <input type="text" class="form-control" id="pass" formControlName="pass">
+                <div *ngIf="userForm.get('pass')?.invalid && userForm.get('pass')?.touched">
+                        <small class="text-danger">La contraseña es obligatoria.</small>
+                    </div>
             </div>
             <div class="col-md-6">
-                <label for="repet_pass" class="form-label">Repite Contraseña</label>
-                <input type="password" class="form-control" id="repet_pass_input">
+                <label for="rol" class="form-label">ROL</label>
+                <select id="rolcito" formControlName="rolcito" class="form-control" >
+                    <option *ngFor=" let rol of roles" [value]="rol.id" >{{rol.descripcion}}</option>
+                </select>
+                <div *ngIf="userForm.get('rolcito')?.invalid && userForm.get('rolcito')?.touched">
+                    <small class="text-danger">El ROL de usuario es obligatorio.</small>
+                </div>
             </div>
+            <!-- <div class="col-md-6">
+                <label for="repet_pass" class="form-label">Repite Contraseña</label>
+                <input type="password" class="form-control" id="repet_pass" formControlName="repet_pass">
+            </div> -->
             <div class="col-12">
                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="fecha_nacimiento_input" >
+                <input type="date" class="form-control" id="fecha_nacimiento" formControlName="fecha_nac" >
+                
             </div>
             <div class=" container card-header">
                 <h4>Dirección de despacho</h4><p>(Opcional)</p>
@@ -51,28 +66,31 @@
             </div>
             <div class="col-md-9">
                 <label for="direccion" class="form-label">Calle</label>
-                <input type="text" class="form-control" id="direccion_input" >
+                <input type="text" class="form-control" id="direccion" formControlName="calle" >
             </div>
             <div class="col-md-3">
                 <label for="numeracion" class="form-label">Numeracion</label>
-                <input type="text" class="form-control" id="numeracion_input" >
+                <input type="text" class="form-control" id="numeracion" formControlName="numeracion" >
             </div>
             <div class="col-md-9">
                 <label for="comuna" class="form-label">Comuna</label>
-                <select id="comuna_input" class="form-control" >
+                <select id="comuna" formControlName="comuna" class="form-control" >
                     <option value="" selected disabled>...</option>
                     <option value="santiago">Santiago</option>
                 </select>
             </div>
+            <div class="card-footer">
+                <div class="col-6">
+                    <button *ngIf="userForm.valid && !modificar" type="submit" class="btn btn-success">Guardar</button>
+                    <button *ngIf="modificar" type="submit" class="btn btn-outline-info">Actualizar</button>
+
+                </div>
+                <div class="col-6">
+                    <button onclick="limpiarFormulario()" class="btn btn-outline-warning" >Limpiar Formulario</button>
+                </div>
+            </div>
         </form>
-        <div class="card-footer">
-            <div class="col-6">
-                <button type="button" onclick="registrarUsuario(1)" class="btn btn-success">Registrar</button>
-            </div>
-            <div class="col-6">
-                <button onclick="limpiarFormulario(1)" class="btn btn-outline-warning" >Limpiar Formulario</button>
-            </div>
-        </div>
+        
     </div>
     <br><hr>
     <div class="card">
@@ -94,6 +112,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr *ngFor="let user of usuarios">
+                        <th scope="row">{{user.id}}</th>
+                        <td>{{user.nombres}} {{user.apellidos}}</td>
+                        <td>{{user.rol.descripcion}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.correo}}</td>
+                        <td><button class="btn btn-outline-success" (click)="mostrarUser(user.id)" > Ver</button></td>
+                    </tr>
                 </tbody>
 
             </table>

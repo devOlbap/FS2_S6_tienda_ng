@@ -76,12 +76,10 @@ export class UserServiceService {
       fecha_nac:'1995-05-06'
     },
   ];
-  private userLogSubject: BehaviorSubject<User | undefined>;
-  public userLog$: Observable<User | undefined>;
+
 
   constructor(private router: Router) {
-    this.userLogSubject = new BehaviorSubject<User | undefined>(this.userLog);
-    this.userLog$ = this.userLogSubject.asObservable();
+    
   }
   updatePassword(username: string, newPassword: string): boolean {
     const userIndex = this.users.findIndex(user => user.username === username);
