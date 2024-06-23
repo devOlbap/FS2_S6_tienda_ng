@@ -42,10 +42,7 @@ export class ProfileComponent {
     private router: Router
   ){
 
-    if(this.user.username.length === 0){
-      this.router.navigate(['/login']);
-    }
-
+  
 
     this.profileForm = this.fb.group({
       nombres: ['', [Validators.required]],
@@ -71,6 +68,9 @@ export class ProfileComponent {
 
     this.profileForm.patchValue(this.user);
     
+    if(this.user.username.length === 0){
+      this.router.navigate(['/login']);
+    }
 
   }
 
