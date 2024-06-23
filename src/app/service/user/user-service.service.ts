@@ -47,7 +47,7 @@ export class UserServiceService {
       calle:'',
       numeracion:'',
       comuna:'',
-      fecha_nac:'06-04-1995'
+      fecha_nac:'1995-05-06'
     },
     { 
       id: 2, 
@@ -60,7 +60,7 @@ export class UserServiceService {
       calle:'',
       numeracion:'',
       comuna:'',
-      fecha_nac:'04-04-1995'
+      fecha_nac:'1995-05-05'
     },
     { 
       id: 3, 
@@ -73,7 +73,7 @@ export class UserServiceService {
       calle:'av el manzano',
       numeracion:'56555',
       comuna:'Las condes',
-      fecha_nac:'06-04-1995'
+      fecha_nac:'1995-05-06'
     },
   ];
   private userLogSubject: BehaviorSubject<User | undefined>;
@@ -135,7 +135,28 @@ export class UserServiceService {
     }
     return undefined; 
   }
+  updateUser(n_user: User): User | undefined {
 
+    const userIndex = this.users.findIndex(user => user.username === n_user.username);
+
+    if (userIndex !== -1) {
+    
+      this.users[userIndex].nombres   = n_user.nombres;
+      this.users[userIndex].apellidos = n_user.apellidos;
+      this.users[userIndex].username  = n_user.username;
+      // this.users[userIndex].rol       = n_user.rol;
+      this.users[userIndex].pass      = n_user.pass;
+      this.users[userIndex].calle     = n_user.calle;
+      this.users[userIndex].numeracion = n_user.numeracion;
+      this.users[userIndex].correo    = n_user.correo;
+      this.users[userIndex].fecha_nac = n_user.fecha_nac;
+      this.users[userIndex].comuna    = n_user.comuna;
+
+      let user = this.users[userIndex];
+      return user;
+    }
+    return undefined;
+  }
   logout(){
     this.setUserBlank();
     this.router.navigate(['/login'])
