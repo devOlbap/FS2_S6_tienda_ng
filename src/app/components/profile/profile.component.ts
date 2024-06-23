@@ -75,7 +75,22 @@ export class ProfileComponent {
   }
 
   update(){
+    let form : User = this.profileForm.value;
 
+    const res = this.userService.updateUser(form);
+
+    if(res !== undefined){
+
+      let n_user : User = res;
+      alert('Usuario actualizado correctamente');
+
+      this.profileForm.reset();
+  
+      this.profileForm.patchValue(n_user);
+      return
+    }
+    alert('Error al actualizar');
+    return
   }
  
 
