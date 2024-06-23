@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavComponent } from '../nav/nav.component';
+import { UserServiceService } from '../../service/user/user-service.service';
+import { Router } from '@angular/router';
 
 
 function formatNumberToCurrency(number: number): string {
@@ -37,7 +39,16 @@ export class AdmProductsComponent {
     this.getProductos();
   }
 
-  constructor(private productService: ProductServiceService, private fb : FormBuilder) { 
+  constructor(
+    private productService: ProductServiceService, 
+    private fb : FormBuilder,
+    private userService:UserServiceService,
+    private router : Router
+  ) { 
+
+    if(this.userService.getUserLog().username.length === 0 ){
+      this.router.navigate(['/login']);
+    }
     this.productoForm = this.fb.group({
       id:[''],
       nombre:['',Validators.required],
