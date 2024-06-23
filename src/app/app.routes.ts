@@ -8,6 +8,7 @@ import { AdmUsersComponent } from './components/adm-users/adm-users.component';
 import { AdmProductsComponent } from './components/adm-products/adm-products.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 
@@ -20,6 +21,8 @@ export const routes: Routes = [
     { path: 'adm-users', component: AdmUsersComponent },
     { path: 'adm-products', component: AdmProductsComponent },
     { path: 'recover-password', component: RecoverPasswordComponent },
+    { path: 'profile', component: ProfileComponent },
+
 
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent }
