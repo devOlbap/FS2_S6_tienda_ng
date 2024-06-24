@@ -82,15 +82,15 @@ export class ProfileComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-    if(this.user.username.length === 0){
-      this.router.navigate(['/login']);
-    }
 
     this.user = this.userService.getUserLog();
 
     this.profileForm.patchValue(this.user);
     this.profileForm.get('username')?.disable();
     
+    if(this.user.username.length === 0){
+      this.router.navigate(['/login']);
+    }
     
 
   }
