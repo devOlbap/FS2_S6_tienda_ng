@@ -11,7 +11,17 @@ function formatNumberToCurrency(number: number): string {
   return formattedNumber;
 }
 
-
+/**
+ * @description
+ * Este es un componente para mostrar y mantener el carrito de cada uusuario.
+ * una vez cerrada la sesion del usuario se limpia el carrito. 
+ * 
+ * @usageNotes
+ * 1.- importa este componente en tu modulo principal
+ * 2.- configura el routing para llamar correctamente a este componente.
+ * 3.- en este componente puedes ver todos los productos que seleccionaste para tu carrito.
+ * 4.- este componente requiere de los servicios de productos para saber el universo de productos.
+ */
 @Component({
   selector: 'app-cart',
   standalone: true,

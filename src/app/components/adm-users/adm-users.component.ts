@@ -7,7 +7,17 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../model/user';
 import { Rol } from '../../model/rol';
 
-
+/**
+ * @description
+ * Este es un modulo de administracion de usuarios.
+ * En este modulo podemos crear un nuevo usuario asignandole cualquiera de los roles que tenemos disponibles 
+ * 
+ * @usageNotes
+ * 1.- importa este componente en tu modulo principal
+ * 2.- configura el routing para llamar correctamente a este componente.
+ * 3.- en este componente puedes crear nuevos usuarios.
+ * 4.- Puedes ver una lista del universo de usuarios.
+ */
 @Component({
   selector: 'app-adm-users',
   standalone: true,

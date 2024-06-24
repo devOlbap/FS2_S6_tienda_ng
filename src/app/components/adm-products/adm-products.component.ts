@@ -16,7 +16,18 @@ function formatNumberToCurrency(number: number): string {
   formattedNumber = formattedNumber.replace('CLP', '').trim();
   return formattedNumber;
 }
-
+/**
+ * @description
+ * Componente para la administracion de productos.
+ * 
+ * Este componente muestra una lista de todos los productos y tambien el formulario para agregar
+ * un producto nuevo.
+ *  
+ * @usageNotes
+ * 1.- Cuando iniciamos el componente obtenemos todos los productos desde el servicio.
+ * 2.- con el mismo formulario podemos crear un nuevo producto o actualizar uno existente.
+ * 3.- para actualizar un producto debemos apretar el botón "VER" y se cargará nuestro producto en el formulario y se habilitará un botón "ACTUALIZAR"
+ */
 
 @Component({
   selector: 'app-adm-products',
@@ -58,6 +69,8 @@ export class AdmProductsComponent {
       img:['',Validators.required]
     })
   }
+
+
   getProductos(){
     this.productos = this.productService.getProducts();
   }
@@ -89,6 +102,11 @@ export class AdmProductsComponent {
   limpiarFormularioProducto(){
     this.productoForm.reset();
   }
+  /**
+   * 
+   * @param {number} id -El id del producto que queremos mostrar en nuestro 
+   *                      formulario para actualizar
+   */
   mostrarProducto(id:number){
 
     this.limpiarFormularioProducto();

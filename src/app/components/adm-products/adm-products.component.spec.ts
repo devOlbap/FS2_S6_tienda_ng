@@ -20,4 +20,19 @@ describe('AdmProductsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  // it('should create a new product',()=>{
+  //   component.productoForm.setValue({
+  //     id:5,
+  //     nombre:'Posa vasos',
+  //     descripcion:'Posa vasos impreso en 3d',
+  //     valor:'15990',
+  //     img:'posa_vasos.jpg'
+  //   });
+  //   expect(component.onSubmit());
+  // });
+  it('should show all products',()=>{
+    component.ngOnInit();
+    component.getProductos();
+    expect(component.productos.length).toBeGreaterThan(1);
+  })
 });

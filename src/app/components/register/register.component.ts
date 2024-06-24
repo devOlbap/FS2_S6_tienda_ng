@@ -6,6 +6,21 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../../model/user';
 
+
+/**
+ * @description
+ * Este es un componente que muestra un formulario HTML donde se pueden ingresar los datos requeridos para crear un nuevo cliente.
+ * Este formulario no sirve para crear administradores o usuarios (funcionarios) de la aplicación.
+ * -> Puede crear solo clientes.
+ * -> Para crear usuarios(funcionarios) o administradores debe ser desde el menu de administracion de usuarios.
+ *  
+ * @usageNotes
+ * 1.- importa este componente en tu modulo principal
+ * 2.- configura el routing para llamar correctamente a este componente.
+ * 3.- Este componente lo utilizamos para que usuarios que no existen en nuestra app se puedan registrar como Clientes.
+ */
+
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -48,6 +63,19 @@ export class RegisterComponent {
     this.limpiarForm();
   }
 
+  /**
+   * Esta función retorna null o undefined ya que el objetivo principal es:
+   *  -> utlizando el servicio de usuarios podemos validar si existen usuarios con algunos datos relevantes ingresados en el formulario
+   *      como por ejemplo:
+   *        > username
+   *        > email
+   *  -> estos datos tienen que ser unicos en nuestra base de datos ya que con ellos realizamos la validacion para la recuperacion de contraseña.
+   *  -> validamos que las contraseñas ingresadas sean válidas e iguales.
+   *  -> una vez realizadas y aprobadas todas las validaciones podemos generar el nuevo registro de usuario.
+   *  -> y lo guardamos utilizando el mismo servicio de usuarios.
+   * 
+   * @returns -> Null | undefined
+   */
   submit(){
     if(!this.userForm.valid){
       return
@@ -109,6 +137,9 @@ export class RegisterComponent {
     }
   }
 
+  /**
+   * Funcion que permite limpiar el formulario utilizado para la creacion de nuevos usuarios.
+   */
   limpiarForm(){
     this.userForm.reset();
   }

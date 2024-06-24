@@ -20,4 +20,9 @@ describe('CartComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should remove a product from the cart.',()=>{
+    expect(component.quitarProducto(1));
+  });
+
 });

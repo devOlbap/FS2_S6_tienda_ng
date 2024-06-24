@@ -7,6 +7,20 @@ import { Rol } from '../../model/rol';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+
+
+/**
+ * @description
+ * Este es un componente que muestra un formulario HTML donde se visualizan los datos personales del usuario que inició sesión.
+ * Utilizamos este componente solo para la actualizacion de informacion personal del mismo usuario.
+ *  
+ * @usageNotes
+ * 1.- importa este componente en tu modulo principal
+ * 2.- configura el routing para llamar correctamente a este componente.
+ * 3.- Este componente es capaz de actualizar los datos personales del usuario loggeado.
+ */
+
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -36,6 +50,12 @@ export class ProfileComponent {
 
   profileForm !: FormGroup;
 
+  /**
+   * 
+   * @param userService -> Servicio de usuario: Utilizamos el servicio para obtener todos los datos el usuario loggeado.
+   * @param fb -> FormBuilder lo utilizamos para crear el objeto del formulario del usuario.
+   * @param router -> Router lo utilizamos para redirigir al login en caso de que no exista usuario loggeado.
+   */
   constructor(
     private userService: UserServiceService,
     private fb : FormBuilder,
@@ -62,25 +82,31 @@ export class ProfileComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-    
+    if(this.user.username.length === 0){
+      this.router.navigate(['/login']);
+    }
 
     this.user = this.userService.getUserLog();
 
     this.profileForm.patchValue(this.user);
     this.profileForm.get('username')?.disable();
     
-    if(this.user.username.length === 0){
-      this.router.navigate(['/login']);
-    }
+    
 
   }
-
+  /**
+   * La función principal de este metodo:
+   *  -> Utilizamos el servicio de usuarios para actualizar los datos del usuario loggeado.
+   *  -> Validamos que el usuario loggeado exista en nuestra base de datos de usuarios.
+   * 
+   * @returns -> Retorna NULL | undefined
+   */
   update(){
     this.profileForm.get('username')?.enable();
     let form : User = this.profileForm.value;
     this.profileForm.get('username')?.disable();
 
-    console.log(form)
+    // console.log(form)
 
     const res = this.userService.updateUser(form);
 

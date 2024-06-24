@@ -6,7 +6,19 @@ import { UserServiceService } from '../../service/user/user-service.service';
 import { Router } from '@angular/router';
 import { NavComponent } from '../nav/nav.component';
 
-
+/**
+ * @description
+ * Este es un componente para realizar el inicio de sesión de usuario a nuestra app.
+ * Los datos requeridos son :
+ *  @param {string} username -> referenciando al nombre de usuario.
+ *  @param {string} password -> referenciando a la contraseña que ingresó el usuario al momento de registrarse.
+ *  
+ * @usageNotes
+ * 1.- importa este componente en tu modulo principal
+ * 2.- configura el routing para llamar correctamente a este componente.
+ * 3.- Este componente muestra un formulario html con dos input.
+ *      donde puedes ingresar tu nombre de usuario y contraseña.
+ */
 
 @Component({
   selector: 'app-login',
@@ -17,6 +29,9 @@ import { NavComponent } from '../nav/nav.component';
 })
 export class LoginComponent {
 
+  /**
+   * Utilizado para el ingreso de las credenciales del usuario en la funcion login().
+   */
   loginForm !:FormGroup;
 
   constructor(
@@ -33,7 +48,10 @@ export class LoginComponent {
     })
     
   }
-
+  /**
+   * Metodo para llamar al servicio de usuarios y preguntar si el usuario ingresó correctamente sus credenciales.
+   * utiliza el loginForm
+   */
   login() {
 
     if(this.loginForm.valid){

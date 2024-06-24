@@ -20,4 +20,14 @@ describe('ProductsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should initialize the table correctly',()=>{
+    component.ngOnInit();
+    expect(component.productos.length>1);
+  });
+  it('sould add to cart correctly',()=>{
+    component.addToCart(1);
+    expect(component.isInCart(1));
+  });
+
 });
