@@ -30,6 +30,7 @@ export class AdmProductsComponent {
 
   productoForm: FormGroup;
 
+  modificar: boolean = false;
 
   //Función para formatear números
   formatNumberToCurrency = formatNumberToCurrency;
@@ -63,15 +64,40 @@ export class AdmProductsComponent {
   onSubmit(){
     if(this.productoForm.valid){
 
+      if(this.modificar){
+        const prod_mod = this.productService.updateProduct(this.productoForm.value);
+        if(!prod_mod){
+          alert('Error al modificar el registro.');
+          return
+        }
+        alert('Producto: '+prod_mod.nombre+' modificado correctamente.');
+        this.getProductos();
+        this.limpiarFormularioProducto();
+        return
+      }
+
       this.productoForm.get('id')?.setValue(this.productos.length+1, { emitEvent: false });
       
       this.productService.addProduct(this.productoForm.value);
 
       this.getProductos();
+      this.limpiarFormularioProducto();
+
       // console.log(this.productoForm.value)
     }
   }
   limpiarFormularioProducto(){
     this.productoForm.reset();
+  }
+  mostrarProducto(id:number){
+
+    this.limpiarFormularioProducto();
+    let producto = this.productService.getProductByID(id);
+    this.productService.id_mod = id;
+    if(producto){
+      this.modificar = true;
+      this.productoForm.patchValue(producto);
+    }
+
   }
 }

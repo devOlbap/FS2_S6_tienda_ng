@@ -9,11 +9,13 @@ import { Product } from '../../model/product';
 })
 export class ProductServiceService {
 
+  id_mod :number = 0;
+
   private products: Product[]=[
     {
       id:1,
       nombre:'Iphone 6 Case',
-      descripcion:'phone case" para teléfono iphone',
+      descripcion:'"phone case" para teléfono iphone',
       valor:5000,
       img:"carcasa_iphone_6.jpg"
     },
@@ -57,6 +59,23 @@ export class ProductServiceService {
     this.products = this.products.filter(prod => prod.id !== id);
   }
 
+  updateProduct(prod:Product): Product | undefined{
+
+    const prodIndex = this.products.findIndex(producto => producto.id === this.id_mod);
+
+    if (prodIndex !== -1) {
+    
+      this.products[prodIndex].valor        = prod.valor;
+      this.products[prodIndex].nombre       = prod.nombre;
+      this.products[prodIndex].descripcion  = prod.descripcion;
+      this.products[prodIndex].img          = prod.img;
+
+      let producto = this.products[prodIndex];
+      this.id_mod =0;
+      return producto;
+    }
+    return undefined;
+  }
 
   getCarrito():Product[]{
     return this.carrito;

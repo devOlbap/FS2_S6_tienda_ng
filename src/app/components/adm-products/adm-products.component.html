@@ -35,7 +35,11 @@
           </div>
           <div class="card-footer">
             <div class="col-6">
-              <button type="submit" class="btn btn-success" [disabled]="productoForm.invalid">Registrar</button>
+              <!-- <button type="submit" class="btn btn-success" [disabled]="productoForm.invalid">Registrar</button> -->
+              <button *ngIf="productoForm.valid && !modificar" type="submit" class="btn btn-success">Guardar</button>
+              <button *ngIf="modificar" type="submit" class="btn btn-outline-info">Actualizar</button>
+
+
             </div>
             <div class="col-6">
               <button type="button" (click)="limpiarFormularioProducto()" class="btn btn-outline-warning">Limpiar Formulario</button>
@@ -67,7 +71,7 @@
                         <td>{{producto.nombre}}</td>
                         <td>{{producto.descripcion}}</td>
                         <td>{{formatNumberToCurrency(producto.valor)}}</td>
-                        <td><button class="btn btn-outline-success" > Ver</button></td>
+                        <td><button class="btn btn-outline-success" (click)="mostrarProducto(producto.id)" > Ver</button></td>
                     </tr>
 
                 </tbody>
