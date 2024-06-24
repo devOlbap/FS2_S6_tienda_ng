@@ -67,7 +67,7 @@ export class UserServiceService {
       nombres: 'Paulina', 
       apellidos:'Pinto',
       correo: 'pauli@gmail.com', 
-      rol: this.roles[2],
+      rol: this.roles[0],
       username:'pauli',
       pass:'Pass1010!',
       calle:'av el manzano',
