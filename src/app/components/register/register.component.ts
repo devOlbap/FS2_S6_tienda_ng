@@ -1,13 +1,115 @@
 import { Component } from '@angular/core';
 import { NavComponent } from '../nav/nav.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserServiceService } from '../../service/user/user-service.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [NavComponent],
+  imports: [NavComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
 
+  userForm : FormGroup;
+
+  constructor(
+    private fb : FormBuilder,
+    private userService:UserServiceService,
+    private router : Router
+  ) { 
+
+    // if(this.userService.getUserLog().username.length === 0 ){
+    //   this.router.navigate(['/login']);
+    // }
+
+    this.userForm = this.fb.group({
+      nombres: ['', [Validators.required]],
+      apellidos: ['', [Validators.required]],
+      username: ['', [Validators.required]],
+      correo: ['', [Validators.required]],
+      pass: ['', [Validators.required]],
+      repet_pass: ['', [Validators.required]],
+      rol: ['', []],
+      fecha_nac: ['', [Validators.required]],
+      calle: ['', []],
+      numeracion: ['', []],
+      comuna: ['', []],
+    })
+  }
+  
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.limpiarForm();
+  }
+
+  submit(){
+    if(!this.userForm.valid){
+      return
+    }
+
+    let username = this.userForm.get('username')?.value;
+    let pass = this.userForm.get('pass')?.value;
+    let repet_pass = this.userForm.get('repet_pass')?.value;
+
+    if(username.trim().length ==0){
+      alert('debe indicar un nombre de usuario.');
+      return
+    }
+
+    let user = this.userService.getUserByUsername(username);
+
+    if(user){
+      alert('Ya existe un usuario con el nombre de usuario: '+user.username+'.');
+      return
+    }
+
+    user = this.userService.getUserByEmail(this.userForm.get('correo')?.value.trim());
+
+    if(user){
+      alert('Ya existe un usuario con el correo : '+user.correo+'.');
+      return
+    }
+
+    if(pass.trim().length == 0 || repet_pass.trim().length == 0){
+      alert('Debe indicar la contraseña y repetirla');
+      return
+    }
+
+    if(pass.trim() !== repet_pass.trim()){
+      alert('Las contraseñas deben ser iguales.');
+      return
+    }
+
+    let rol = this.userService.getRolById(3); // id cliente
+    if(rol){
+      const n_user :User = {
+        id:this.userService.getUsers().length+1,
+        nombres:this.userForm.get('nombres')?.value,
+        apellidos:this.userForm.get('apellidos')?.value,
+        username:this.userForm.get('username')?.value,
+        rol: rol,
+        pass:this.userForm.get('pass')?.value,
+        calle:this.userForm.get('calle')?.value,
+        numeracion:this.userForm.get('numeracion')?.value,
+        correo:this.userForm.get('correo')?.value,
+        fecha_nac:this.userForm.get('fecha_nac')?.value,
+        comuna:this.userForm.get('comuna')?.value
+      }
+      this.userService.addUser(n_user);
+
+      alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' creado exitosamente!');
+      this.limpiarForm();
+      return
+    }
+  }
+
+  limpiarForm(){
+    this.userForm.reset();
+  }
 }

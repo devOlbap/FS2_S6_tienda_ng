@@ -8,34 +8,55 @@
             <h2 class="text-center">Formulario de Registro</h2>
 
         </div>
-        <form class="row g-3" >
+        <form class="row g-3"[formGroup]="userForm" (ngSubmit)="submit()" >
             <div class="col-md-6">
                 <label for="nombres" class="form-label">Nombres</label>
-                <input type="text" class="form-control" id="nombres">
+                <input type="text" class="form-control" id="nombres" formControlName="nombres">
+                <div *ngIf="userForm.get('nombres')?.invalid && userForm.get('nombres')?.touched">
+                        <small class="text-danger">El nombre es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="apellidos" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos">
+                <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
+                <div *ngIf="userForm.get('apellidos')?.invalid && userForm.get('apellidos')?.touched">
+                        <small class="text-danger">El apellido es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="username" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control" id="username">
+                <input type="text" class="form-control" id="username" formControlName="username">
+                <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+                        <small class="text-danger">El nombre de usuario es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" formControlName="correo">
+                <div *ngIf="userForm.get('correo')?.invalid && userForm.get('correo')?.touched">
+                        <small class="text-danger">El correo es obligatorio.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="pass" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="pass">
+                <input type="text" class="form-control" id="pass" formControlName="pass">
+                <div *ngIf="userForm.get('pass')?.invalid && userForm.get('pass')?.touched">
+                        <small class="text-danger">La contraseña es obligatoria.</small>
+                    </div>
             </div>
             <div class="col-md-6">
                 <label for="repet_pass" class="form-label">Repite Contraseña</label>
-                <input type="password" class="form-control" id="repet_pass">
+                <input type="password" class="form-control" id="repet_pass" formControlName="repet_pass">
+                <div *ngIf="userForm.get('repet_pass')?.invalid && userForm.get('repet_pass')?.touched">
+                    <small class="text-danger">La contraseña es obligatoria.</small>
+                </div>
             </div>
             <div class="col-12">
                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="fecha_nacimiento" >
+                <input type="date" class="form-control" id="fecha_nacimiento" formControlName="fecha_nac">
+                <div *ngIf="userForm.get('fecha_nac')?.invalid && userForm.get('fecha_nac')?.touched">
+                    <small class="text-danger">La fecha de nacimiento es obligatoria.</small>
+                </div>
             </div>
             <div class=" container card-header">
                 <h4>Dirección de despacho</h4><p>(Opcional)</p>
@@ -43,28 +64,29 @@
             </div>
             <div class="col-md-9">
                 <label for="direccion" class="form-label">Calle</label>
-                <input type="text" class="form-control" id="direccion" >
+                <input type="text" class="form-control" id="direccion"  formControlName="calle">
             </div>
             <div class="col-md-3">
                 <label for="numeracion" class="form-label">Numeracion</label>
-                <input type="text" class="form-control" id="numeracion" >
+                <input type="text" class="form-control" id="numeracion" formControlName="numeracion" >
             </div>
             <div class="col-md-9">
                 <label for="comuna" class="form-label">Comuna</label>
-                <select id="comuna" class="form-control" >
+                <select id="comuna" class="form-control" formControlName="comuna" >
                     <option value="" selected disabled>...</option>
                     <option value="santiago">Santiago</option>
                 </select>
             </div>
+            <div class="card-footer">
+                <div class="col-6">
+                    <button *ngIf="userForm.valid" type="submit"  class="btn btn-success">Registrar</button>
+                </div>
+                <div class="col-6">
+                    <button  (click)="limpiarForm()" class="btn btn-outline-warning" >Limpiar Formulario</button>
+                </div>
+            </div>
         </form>
-        <div class="card-footer">
-            <div class="col-6">
-                <button type="button" onclick="registrarUsuario()" class="btn btn-success">Registrar</button>
-            </div>
-            <div class="col-6">
-                <button onclick="limpiarFormulario()" class="btn btn-outline-warning" >Limpiar Formulario</button>
-            </div>
-        </div>
+        
     </div>
 
 

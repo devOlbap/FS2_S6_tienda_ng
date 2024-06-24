@@ -89,6 +89,31 @@ export class UserServiceService {
     }
     return false;
   }
+
+  getUserByUsername(username:string):User| null{
+    const user = this.users.find(user=> user.username === username);
+    if(user){
+      return user
+    }
+    return null;
+
+  }
+  getUserByEmail(correo:string){
+    const user = this.users.find(user=> user.correo === correo);
+    if(user){
+      return user
+    }
+    return null;
+  }
+
+  getRolById(id:number){
+    let rol = this.roles.find(rol => rol.id === id);
+    if(rol){
+      return rol
+    }
+    return null
+  }
+
   getUsers(): User[] {
     return this.users;
   }
