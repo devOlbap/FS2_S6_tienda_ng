@@ -67,6 +67,7 @@ export class ProfileComponent {
     this.user = this.userService.getUserLog();
 
     this.profileForm.patchValue(this.user);
+    this.profileForm.get('username')?.disable();
     
     if(this.user.username.length === 0){
       this.router.navigate(['/login']);
@@ -75,7 +76,11 @@ export class ProfileComponent {
   }
 
   update(){
+    this.profileForm.get('username')?.enable();
     let form : User = this.profileForm.value;
+    this.profileForm.get('username')?.disable();
+
+    console.log(form)
 
     const res = this.userService.updateUser(form);
 

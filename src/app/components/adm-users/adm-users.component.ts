@@ -89,11 +89,13 @@ export class AdmUsersComponent {
         this.userService.updateUser(n_user);
         alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' con ROL: '+n_user.rol.descripcion+' modificado exitosamente!.');
         this.getUsers();
+        this.limpiarForm();
         return
       }
       this.userService.addUser(n_user);
       alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' con ROL: '+n_user.rol.descripcion+' creado exitosamente!.');
       this.getUsers();
+      this.limpiarForm();
       return
     }
     
@@ -103,6 +105,8 @@ export class AdmUsersComponent {
 
   limpiarForm(){
     this.userForm.reset();
+    this.userForm.get('username')?.enable();
+    this.modificar = false;
   }
   mostrarUser(id:number){
 
@@ -125,7 +129,9 @@ export class AdmUsersComponent {
         comuna: user.comuna,
         role: '',
       })
-      this.userForm
+
+      this.userForm.get('username')?.disable();
+      // this.userForm
     }
 
   }
