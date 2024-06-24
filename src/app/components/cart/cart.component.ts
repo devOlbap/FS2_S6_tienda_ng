@@ -44,6 +44,13 @@ export class CartComponent {
     //Add 'implements OnInit' to the class.
     this.productos = this.productService.getCarrito();
   }
+  /**
+   * Este metodo es para eliminar el producto deseado de la lista de carrito.
+   * recibe como parametro el identificador del producto que requiere eliminar
+   * 
+   * @param id -> Identificador que hace referencia al producto seleccionado.
+   * @returns 
+   */
   quitarProducto(id:number){
     if(this.productos.length ===0){
       return
