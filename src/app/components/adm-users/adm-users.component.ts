@@ -33,6 +33,15 @@ export class AdmUsersComponent {
   modificar: boolean = false;
   userForm : FormGroup;
 
+  /**
+   * En el constructor validamos si existe algun usuario loggeado..
+   *  -> de lo contrario redirigimos a login.
+   * - Generamos el objeto de formulario de usuarios.
+   * 
+   * @param fb -> FormBuilder para crear el objeto formulario e indicar los campos requeridos.
+   * @param userService -> Servicio de usuarios que nos permite obtener, modificar y agregar usuarios.
+   * @param router -> Router lo utilizamos para redirigir al componente login cuando no tenemos un usuario loggeado.
+   */
   constructor(
     private fb : FormBuilder,
     private userService:UserServiceService,
@@ -68,14 +77,25 @@ export class AdmUsersComponent {
     this.getUsers();
     this.getRoles();
   }
-
+  /**
+   * Funcion que obtiene todo el universo de usuarios.
+   */
   getUsers(){
     this.usuarios = this.userService.getUsers();
   }
+  /**
+   * Funcion que obtiene todos los roles disponibles para su seleccion.
+   */
   getRoles(){
     this.roles = this.userService.getRoles();
   }
-
+  /**
+   * Esta funcion obtiene y valida toda la informacion ingresada en el formulario de usuarios.
+   * si cumple con todas las validaciones utilizamos el servicio de usuarios para poder agregar o modificar 
+   * el usuario nuevo o un usuario seleccionado respectivamente.
+   * 
+   * @returns null | undefined
+   */
   submit(){
     
     let n_rol = this.roles.find(rol_e => rol_e.id == this.userForm.get('rolcito')?.value );
@@ -118,6 +138,14 @@ export class AdmUsersComponent {
     this.userForm.get('username')?.enable();
     this.modificar = false;
   }
+  
+  /**
+   * Esta funcion nos permite recibir por parámetro el identificador el usuario.
+   * Validar si es que existe un usuario con el identificador y mostrar la información 
+   * referida a este objeto en el formulario HTML.
+   * 
+   * @param id -> Identificador que hace referencia al usuario que se requiere ver el Detalle.
+   */
   mostrarUser(id:number){
 
     let user = this.userService.getUserById(id);
