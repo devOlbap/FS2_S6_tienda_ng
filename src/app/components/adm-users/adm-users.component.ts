@@ -81,7 +81,7 @@ export class AdmUsersComponent {
    * Funcion que obtiene todo el universo de usuarios.
    */
   getUsers(){
-    this.usuarios = this.userService.getUsers();
+    this.usuarios = this.userService.getUsuarios();
   }
   /**
    * Funcion que obtiene todos los roles disponibles para su seleccion.
@@ -102,7 +102,7 @@ export class AdmUsersComponent {
 
     if(n_rol){
       const n_user :User = {
-        id:this.userService.getUsers().length+1,
+        id:this.userService.getUsuarios().length+1,
         nombres:this.userForm.get('nombres')?.value,
         apellidos:this.userForm.get('apellidos')?.value,
         username:this.userForm.get('username')?.value,

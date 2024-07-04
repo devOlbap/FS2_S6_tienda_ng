@@ -4,11 +4,24 @@ import { User } from '../../model/user';
 import { Rol } from '../../model/rol';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
+
+
+  httpOptions = {
+    headers : new HttpHeaders({
+      "Content-Type":"application/json",
+      "Authorization":"Bearer ce572890-912a-4095-9aa8-f36156faf398"
+    })
+  }
+
+  private usuariosURL = "/api/v0/b/tienda-1c239.appspot.com/o/usuarios.json?alt=media&token=ce572890-912a-4095-9aa8-f36156faf398";
+
   
   private rolLog:Rol = {
     id:0,
@@ -29,58 +42,20 @@ export class UserServiceService {
     comuna:''
 
   };
-  private roles: Rol[] = [
-    { id: 1, descripcion: 'Administrador' },
-    { id: 2, descripcion: 'Usuario' },
-    { id: 3, descripcion: 'Cliente' }
-  ];
+  private roles: Rol[] = [];
 
-  private users: User[] = [
-    { 
-      id: 1, 
-      nombres: 'Pablo', 
-      apellidos:'Garrido Cid',
-      correo: 'pa.garrido.cid@gmail.com', 
-      rol: this.roles[0],
-      username:'admin',
-      pass:'Pass1010!',
-      calle:'',
-      numeracion:'',
-      comuna:'',
-      fecha_nac:'1995-05-06'
-    },
-    { 
-      id: 2, 
-      nombres: 'Javier', 
-      apellidos:'Gonzalez',
-      correo: 'javier@gmail.com', 
-      rol: this.roles[1],
-      username:'javiercito',
-      pass:'Pass1010!',
-      calle:'',
-      numeracion:'',
-      comuna:'',
-      fecha_nac:'1995-05-05'
-    },
-    { 
-      id: 3, 
-      nombres: 'Paulina', 
-      apellidos:'Pinto',
-      correo: 'pauli@gmail.com', 
-      rol: this.roles[0],
-      username:'pauli',
-      pass:'Pass1010!',
-      calle:'av el manzano',
-      numeracion:'56555',
-      comuna:'Las condes',
-      fecha_nac:'1995-05-06'
-    },
-  ];
+  private users: User[] = [];
 
 
-  constructor(private router: Router) {
-    
+  constructor(private router: Router, private http : HttpClient) { }
+
+  
+  getJSONdata(): Observable<User[]> {
+    return this.http.get<User[]>(this.usuariosURL);
   }
+
+
+
   updatePassword(username: string, newPassword: string): boolean {
     const userIndex = this.users.findIndex(user => user.username === username);
     if (userIndex !== -1) {
@@ -114,7 +89,20 @@ export class UserServiceService {
     return null
   }
 
-  getUsers(): User[] {
+  // getUsers(): User[] {
+  //   return this.users;
+  // }
+
+  getUsers(): Observable<User[]> {
+    return this.getJSONdata().pipe(
+      map(usrs => {
+        this.users = usrs;
+        return usrs;
+      })
+    );
+  }
+
+  getUsuarios(){
     return this.users;
   }
 

@@ -76,7 +76,7 @@ export class RecoverPasswordComponent {
       return
     }
     
-    const user = this.userService.getUsers().find(
+    const user = this.userService.getUsuarios().find(
       user => user.username === this.username
               && user.correo === email
     )

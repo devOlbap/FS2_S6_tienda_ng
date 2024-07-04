@@ -6,6 +6,7 @@ import { Product } from '../../model/product';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NavComponent } from '../nav/nav.component';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 function formatNumberToCurrency(number: number): string {
   let formattedNumber = number.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
@@ -51,7 +52,9 @@ export class ProductsComponent {
   ) { }
 
   ngOnInit(): void {
-    this.productos = this.productService.getProducts();
+    this.productService.getProducts().subscribe(products => {
+      this.productos = products;
+    });
   }
   /**
    * Esta función llama al servicio de productos para preguntar si el producto seleccionado existe en el carrito.

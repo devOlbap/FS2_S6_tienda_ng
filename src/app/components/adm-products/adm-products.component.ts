@@ -72,7 +72,9 @@ export class AdmProductsComponent {
 
 
   getProductos(){
-    this.productos = this.productService.getProducts();
+    this.productService.getProducts().subscribe(products => {
+      this.productos = products;
+    });
   }
   onSubmit(){
     if(this.productoForm.valid){
