@@ -23,7 +23,7 @@
                 </div>            
         </div>
         <div class="card-footer">
-            <button type="submit"  class="btn btn-success">Acceder</button>           
+            <button type="submit" [disabled]="!this.loginForm.valid" class="btn btn-success">Acceder</button>           
         </div>
     </form>
 

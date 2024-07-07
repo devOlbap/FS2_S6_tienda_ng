@@ -39,8 +39,26 @@ export class ProductServiceService {
     );
   }
 
+  postProductos(lista_productos:any){
+    this.http.post(this.productosURL,lista_productos,this.httpOptions)
+    .subscribe(
+      response =>{
+        console.log( 'Actualizado con exito!.');
+      },
+      error=>{
+        console.log( 'Error al actualizar');
+      }
+    )
+    // this.getProducts();
+
+  }
+
+
+
   addProduct(product: Product) {
     this.products.push(product);
+
+    this.postProductos(this.products);
   }
 
   getProductByID(id: number): Product | undefined {
@@ -49,6 +67,7 @@ export class ProductServiceService {
 
   deleteProduct(id: number): void {
     this.products = this.products.filter(prod => prod.id !== id);
+    this.postProductos(this.products);
   }
 
   updateProduct(prod: Product): Product | undefined {
@@ -62,6 +81,9 @@ export class ProductServiceService {
 
       let producto = this.products[prodIndex];
       this.id_mod = 0;
+
+      this.postProductos(this.products);
+
       return producto;
     }
     return undefined;

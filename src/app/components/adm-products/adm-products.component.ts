@@ -76,6 +76,12 @@ export class AdmProductsComponent {
       this.productos = products;
     });
   }
+
+  eliminar(id:number){
+    this.productService.deleteProduct(id);
+    this.getProductos();
+  }
+
   onSubmit(){
     if(this.productoForm.valid){
 

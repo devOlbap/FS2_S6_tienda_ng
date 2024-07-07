@@ -42,17 +42,59 @@ export class UserServiceService {
     comuna:''
 
   };
-  private roles: Rol[] = [];
+  private roles: Rol[] = [
+    { id: 1, descripcion: 'Administrador' },
+    { id: 2, descripcion: 'Usuario' },
+    { id: 3, descripcion: 'Cliente' }
+  ];
 
-  private users: User[] = [];
+  private users: User[] = [{ 
+    id: 1, 
+    nombres: 'Pablo', 
+    apellidos:'Garrido Cid',
+    correo: 'pa.garrido.cid@gmail.com', 
+    rol: this.roles[0],
+    username:'admin',
+    pass:'Pass1010!',
+    calle:'',
+    numeracion:'',
+    comuna:'',
+    fecha_nac:'1995-05-06'
+  },
+  { 
+    id: 2, 
+    nombres: 'Javier', 
+    apellidos:'Gonzalez',
+    correo: 'javier@gmail.com', 
+    rol: this.roles[1],
+    username:'javiercito',
+    pass:'Pass1010!',
+    calle:'',
+    numeracion:'',
+    comuna:'',
+    fecha_nac:'1995-05-05'
+  },
+  { 
+    id: 3, 
+    nombres: 'Paulina', 
+    apellidos:'Pinto',
+    correo: 'pauli@gmail.com', 
+    rol: this.roles[2],
+    username:'pauli',
+    pass:'Pass1010!',
+    calle:'av el manzano',
+    numeracion:'56555',
+    comuna:'Las condes',
+    fecha_nac:'1995-05-06'
+  },];
 
 
   constructor(private router: Router, private http : HttpClient) { }
 
   
-  getJSONdata(): Observable<User[]> {
-    return this.http.get<User[]>(this.usuariosURL);
-  }
+  // getJSONdata(): Observable<User[]> {
+  //   return this.http.get<User[]>(this.usuariosURL);
+  // }
 
 
 
@@ -93,14 +135,14 @@ export class UserServiceService {
   //   return this.users;
   // }
 
-  getUsers(): Observable<User[]> {
-    return this.getJSONdata().pipe(
-      map(usrs => {
-        this.users = usrs;
-        return usrs;
-      })
-    );
-  }
+  // getUsers(): Observable<User[]> {
+  //   return this.getJSONdata().pipe(
+  //     map(usrs => {
+  //       this.users = usrs;
+  //       return this.users;
+  //     })
+  //   );
+  // }
 
   getUsuarios(){
     return this.users;
@@ -164,6 +206,14 @@ export class UserServiceService {
       this.users[userIndex].comuna    = n_user.comuna;
 
       let user = this.users[userIndex];
+
+
+
+        
+
+
+
+
       return user;
     }
     return undefined;

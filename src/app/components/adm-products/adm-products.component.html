@@ -71,7 +71,12 @@
                         <td>{{producto.nombre}}</td>
                         <td>{{producto.descripcion}}</td>
                         <td>{{formatNumberToCurrency(producto.valor)}}</td>
-                        <td><button class="btn btn-outline-success" (click)="mostrarProducto(producto.id)" > Ver</button></td>
+                        <td>
+                          <button class="btn btn-outline-success" (click)="mostrarProducto(producto.id)" > Ver</button>
+                          -
+                          <button class="btn btn-outline-danger" (click)="eliminar(producto.id)" > X</button>
+                        </td>
+
                     </tr>
 
                 </tbody>
