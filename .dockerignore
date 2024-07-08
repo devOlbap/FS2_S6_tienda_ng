@@ -11,3 +11,6 @@ firebase.json
 README.md
 tsconfig.spec.json
 tsconfig.doc.json
+proxy.conf.json
+nginx.conf
+environment.ts
