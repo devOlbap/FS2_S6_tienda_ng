@@ -8,8 +8,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports:  [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, NavComponent, ReactiveFormsModule],
-  templateUrl: './app.component.html',
+  imports:  [
+    CommonModule, 
+    RouterOutlet, 
+    RouterLink, 
+    RouterLinkActive, 
+    NavComponent, 
+    ReactiveFormsModule
+  ],
+    templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {

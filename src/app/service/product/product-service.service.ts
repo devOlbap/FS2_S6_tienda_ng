@@ -16,7 +16,9 @@ export class ProductServiceService {
     })
   }
 
-  private productosURL = "/api/v0/b/tienda-1c239.appspot.com/o/productos.json?alt=media&token=59eece05-8dd6-4757-97da-76918096b401";
+  // private productosURL = "/api/v0/b/tienda-1c239.appspot.com/o/productos.json?alt=media&token=59eece05-8dd6-4757-97da-76918096b401";
+  private productosURL = "https://firebasestorage.googleapis.com/v0/b/tienda-1c239.appspot.com/o/productos.json?alt=media&token=4de3d34e-93f6-438c-ae63-382dbb058aec";
+
 
   id_mod: number = 0;
 
