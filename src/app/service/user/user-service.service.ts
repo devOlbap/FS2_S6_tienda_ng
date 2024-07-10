@@ -7,21 +7,34 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
 
-  httpOptions = {
-    headers : new HttpHeaders({
-      "Content-Type":"application/json",
-      "Authorization":"Bearer ce572890-912a-4095-9aa8-f36156faf398"
-    })
-  }
+  // httpOptions = {
+  //   headers : new HttpHeaders({
+  //     "Content-Type":"application/json",
+  //     "Authorization":"Bearer ce572890-912a-4095-9aa8-f36156faf398"
+  //   })
+  // }
 
-  private usuariosURL = "/api/v0/b/tienda-1c239.appspot.com/o/usuarios.json?alt=media&token=ce572890-912a-4095-9aa8-f36156faf398";
+  private usuariosURL = environment.apiUrl
+                    + environment.dominio_app
+                    + "o/usuarios.json?"
+                    + "alt=media&"
+                    + "token="+environment.token_usuarios //token acceso archivo json
+  ;
 
+  private rolesURL = environment.apiUrl
+                    + environment.dominio_app
+                    + "o/roles.json?"
+                    + "alt=media&"
+                    + "token="+environment.token_roles
+  ;
   
   private rolLog:Rol = {
     id:0,
@@ -33,7 +46,7 @@ export class UserServiceService {
     nombres:'',
     apellidos:'',
     username:'',
-    rol:this.rolLog,
+    rol:0,
     pass:'',
     calle:'',
     numeracion:'',
@@ -42,60 +55,37 @@ export class UserServiceService {
     comuna:''
 
   };
-  private roles: Rol[] = [
-    { id: 1, descripcion: 'Administrador' },
-    { id: 2, descripcion: 'Usuario' },
-    { id: 3, descripcion: 'Cliente' }
-  ];
+  private roles: Rol[] = [];
 
-  private users: User[] = [{ 
-    id: 1, 
-    nombres: 'Pablo', 
-    apellidos:'Garrido Cid',
-    correo: 'pa.garrido.cid@gmail.com', 
-    rol: this.roles[0],
-    username:'admin',
-    pass:'Pass1010!',
-    calle:'',
-    numeracion:'',
-    comuna:'',
-    fecha_nac:'1995-05-06'
-  },
-  { 
-    id: 2, 
-    nombres: 'Javier', 
-    apellidos:'Gonzalez',
-    correo: 'javier@gmail.com', 
-    rol: this.roles[1],
-    username:'javiercito',
-    pass:'Pass1010!',
-    calle:'',
-    numeracion:'',
-    comuna:'',
-    fecha_nac:'1995-05-05'
-  },
-  { 
-    id: 3, 
-    nombres: 'Paulina', 
-    apellidos:'Pinto',
-    correo: 'pauli@gmail.com', 
-    rol: this.roles[2],
-    username:'pauli',
-    pass:'Pass1010!',
-    calle:'av el manzano',
-    numeracion:'56555',
-    comuna:'Las condes',
-    fecha_nac:'1995-05-06'
-  },];
+  private users: User[] = [];
 
 
   constructor(private router: Router, private http : HttpClient) { }
 
   
-  // getJSONdata(): Observable<User[]> {
-  //   return this.http.get<User[]>(this.usuariosURL);
-  // }
+  getJSONdataUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.usuariosURL);
+  }
 
+  getDataUsers(): Observable<User[]> {
+    return this.getJSONdataUsers().pipe(
+      map(usrs => {
+        this.users = usrs;
+        return this.users;
+      })
+    );
+  }
+  getJSONdataRoles(): Observable<Rol[]> {
+    return this.http.get<Rol[]>(this.usuariosURL);
+  }
+  getDataRoles(): Observable<Rol[]> {
+    return this.getJSONdataRoles().pipe(
+      map(rols => {
+        this.roles = rols;
+        return this.roles;
+      })
+    );
+  }
 
 
   updatePassword(username: string, newPassword: string): boolean {
@@ -131,18 +121,12 @@ export class UserServiceService {
     return null
   }
 
-  // getUsers(): User[] {
-  //   return this.users;
-  // }
+  
 
-  // getUsers(): Observable<User[]> {
-  //   return this.getJSONdata().pipe(
-  //     map(usrs => {
-  //       this.users = usrs;
-  //       return this.users;
-  //     })
-  //   );
-  // }
+  getRolUserLog(){
+    return this.roles.find(rol => rol.id = this.userLog.rol);
+  }
+
 
   getUsuarios(){
     return this.users;
@@ -170,7 +154,7 @@ export class UserServiceService {
       nombres:'',
       apellidos:'',
       username:'',
-      rol:this.rolLog,
+      rol:0,
       pass:'',
       calle:'',
       numeracion:'',
@@ -181,6 +165,19 @@ export class UserServiceService {
     }
   }
   login(username: string, password: string): User | undefined {
+
+    this.getDataRoles().subscribe(
+      roles => {
+        this.roles =roles;
+      }
+    )
+
+    this.getDataUsers().subscribe(
+      usuarios => {
+        this.users = usuarios;
+      }
+    );
+
     const foundUser = this.users.find(user => user.username === username && user.pass === password);
     if (foundUser) {
       this.userLog = foundUser;

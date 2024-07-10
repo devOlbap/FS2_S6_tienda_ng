@@ -38,7 +38,7 @@ export class ProfileComponent {
     nombres:'',
     apellidos:'',
     username:'',
-    rol:this.rol,
+    rol:0,
     pass:'',
     calle:'',
     numeracion:'',

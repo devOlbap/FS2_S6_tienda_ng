@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +19,12 @@ export class ProductServiceService {
   }
 
   // private productosURL = "/api/v0/b/tienda-1c239.appspot.com/o/productos.json?alt=media&token=59eece05-8dd6-4757-97da-76918096b401";
-  private productosURL = "https://firebasestorage.googleapis.com/v0/b/tienda-1c239.appspot.com/o/productos.json?alt=media&token=4de3d34e-93f6-438c-ae63-382dbb058aec";
+  private productosURL = environment.apiUrl
+                    +environment.dominio_app
+                    +"o/productos.json?"
+                    +"alt=media&"
+                    +"token="+environment.token_productos //token acceso archivo json
+  ;
 
 
   id_mod: number = 0;

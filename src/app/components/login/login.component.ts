@@ -6,6 +6,10 @@ import { UserServiceService } from '../../service/user/user-service.service';
 import { Router } from '@angular/router';
 import { NavComponent } from '../nav/nav.component';
 
+import { User } from '../../model/user';
+import { Observable } from 'rxjs';
+import { Rol } from '../../model/rol';
+
 /**
  * @description
  * Este es un componente para realizar el inicio de sesión de usuario a nuestra app.
@@ -34,6 +38,9 @@ export class LoginComponent {
    */
   loginForm !:FormGroup;
 
+  users :User[] = [];
+  roles :Rol[]=[];
+
   constructor(
     private fb: FormBuilder, 
     private userService: UserServiceService,
@@ -46,7 +53,7 @@ export class LoginComponent {
       username:['',Validators.required],
       password:['',[Validators.required, Validators.minLength(8)]]
     })
-    
+
   }
   /**
    * Metodo para llamar al servicio de usuarios y preguntar si el usuario ingresó correctamente sus credenciales.
@@ -55,11 +62,28 @@ export class LoginComponent {
   login() {
 
     if(this.loginForm.valid){
-      const user = this.userService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+      // const user = this.userService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+
+      let username = this.loginForm.get('username')?.value.trim().length > 0 ? this.loginForm.get('username')?.value.trim() : false;
+
+      let password = this.loginForm.get('password')?.value.trim().length > 0 ? this.loginForm.get('password')?.value.trim() : false;
+
+      if(!username){
+        alert('Falta indicar el nombre de usuario.');
+        return
+      }
+      if(!password){
+        alert('Falta indicar la contraseña.');
+        return
+      }
+
+      let user = this.userService.login(username,password);
+
       if (user) {
         
         this.router.navigate(['/home']);
         alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
+        this.userService.userLog = user;
       } else {
         alert('Credenciales inválidas. Inicio de sesión fallido.');
       }

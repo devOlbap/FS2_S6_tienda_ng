@@ -6,7 +6,7 @@ export interface User {
     nombres     :string; 
     apellidos   :string;
     correo      :string; 
-    rol         :Rol;
+    rol         :number;
     username    :string;
     pass        :string;
     fecha_nac   :string;

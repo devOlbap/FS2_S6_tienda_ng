@@ -98,15 +98,15 @@ export class AdmUsersComponent {
    */
   submit(){
     
-    let n_rol = this.roles.find(rol_e => rol_e.id == this.userForm.get('rolcito')?.value );
+    // let n_rol = this.roles.find(rol_e => rol_e.id == this.userForm.get('rolcito')?.value );
 
-    if(n_rol){
+    if(true){
       const n_user :User = {
         id:this.userService.getUsuarios().length+1,
         nombres:this.userForm.get('nombres')?.value,
         apellidos:this.userForm.get('apellidos')?.value,
         username:this.userForm.get('username')?.value,
-        rol: n_rol,
+        rol: 0,
         pass:this.userForm.get('pass')?.value,
         calle:this.userForm.get('calle')?.value,
         numeracion:this.userForm.get('numeracion')?.value,
@@ -115,15 +115,17 @@ export class AdmUsersComponent {
         comuna:this.userForm.get('comuna')?.value
       }
 
+      
+
       if(this.modificar){
         this.userService.updateUser(n_user);
-        alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' con ROL: '+n_user.rol.descripcion+' modificado exitosamente!.');
+        alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' con ROL: xx modificado exitosamente!.');
         this.getUsers();
         this.limpiarForm();
         return
       }
       this.userService.addUser(n_user);
-      alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' con ROL: '+n_user.rol.descripcion+' creado exitosamente!.');
+      alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' con ROL: xx creado exitosamente!.');
       this.getUsers();
       this.limpiarForm();
       return
@@ -160,7 +162,7 @@ export class AdmUsersComponent {
         username: user.username,
         correo: user.correo,
         pass: user.pass,
-        rolcito: user.rol.id,
+        rolcito: 0,
         fecha_nac: user.fecha_nac,
         calle: user.calle,
         numeracion: user.numeracion,

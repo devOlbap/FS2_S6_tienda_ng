@@ -114,14 +114,14 @@ export class RegisterComponent {
       return
     }
 
-    let rol = this.userService.getRolById(3); // id cliente
-    if(rol){
+    // let rol = this.userService.getRolById(3); // id cliente
+    if(true){
       const n_user :User = {
         id:this.userService.getUsuarios().length+1,
         nombres:this.userForm.get('nombres')?.value,
         apellidos:this.userForm.get('apellidos')?.value,
         username:this.userForm.get('username')?.value,
-        rol: rol,
+        rol: 1,
         pass:this.userForm.get('pass')?.value,
         calle:this.userForm.get('calle')?.value,
         numeracion:this.userForm.get('numeracion')?.value,

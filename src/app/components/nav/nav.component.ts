@@ -37,7 +37,7 @@ export class NavComponent {
     nombres:'',
     apellidos:'',
     username:'',
-    rol:this.rol,
+    rol:this.rol.id,
     pass:'',
     calle:'',
     numeracion:'',

@@ -7,7 +7,7 @@
             <h2>Perfil</h2>
             <h2 class="text-center">{{user.nombres+' '+user.apellidos}}</h2>
 
-            <h4 class="text-center">{{user.rol.descripcion}}</h4>
+            <h4 class="text-center">{{rol.descripcion}}</h4>
         </div>
         <form class="row g-3" [formGroup]="profileForm" (ngSubmit)="update()" >
             <div class="col-md-6">

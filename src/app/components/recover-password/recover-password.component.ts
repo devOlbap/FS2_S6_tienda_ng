@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { NavComponent } from '../nav/nav.component';
 import { Router } from '@angular/router';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-recover-password',
@@ -24,6 +25,8 @@ export class RecoverPasswordComponent {
   validateFormbool:boolean = false;
 
 
+  users : User[]= [];
+
   constructor(
     private userService: UserServiceService,
     private fb: FormBuilder,
@@ -41,7 +44,12 @@ export class RecoverPasswordComponent {
 
     this.recoverPassForm = this.fb.group({
       pass:['',Validators.required]
-    })
+    });
+    // this.userService.getDataUsers().subscribe(
+    //   usuarios => {
+    //     this.users = usuarios;
+    //   }
+    // );
     
   }
   onSubmitRecover(){
@@ -51,16 +59,18 @@ export class RecoverPasswordComponent {
       alert('Falta indicar la contraseña nueva');
       return
     }
-    this.userService.updatePassword(this.username, password);
+    // this.userService.updatePassword(this.username, password);
 
-    const user = this.userService.login(this.username, password);
-      if (user) {
-        
-        this.router.navigate(['/home']);
-        alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
-      } else {
-        alert('Credenciales inválidas. Inicio de sesión fallido.');
-      }
+    //const user = this.userService.login(this.username, password);
+    const user = this.userService.getUsuarios().find(user => user.pass === password)
+
+    if (user) {
+      
+      this.router.navigate(['/home']);
+      alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
+    } else {
+      alert('Credenciales inválidas. Inicio de sesión fallido.');
+    }
   }
 
   onSubmit() {
