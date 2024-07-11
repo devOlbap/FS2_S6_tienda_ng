@@ -30,10 +30,10 @@
                 <label for="pass" class="form-label">Contraseña</label>
                 <input type="text" class="form-control" id="pass" formControlName="pass">
             </div>
-            <!-- <div class="col-md-6">
-                <label for="repet_pass" class="form-label">Repite Contraseña</label>
-                <input type="password" class="form-control" id="repet_pass" formControlName="repet_pass">
-            </div> -->
+            <div *ngIf="!thisisfalse" class="col-md-6">
+                <label for="rol" class="form-label">ROL</label>
+                <input type="text" class="form-control" id="rol" formControlName="rol">
+            </div>
             <div class="col-12">
                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                 <input type="date" class="form-control" id="fecha_nacimiento" formControlName="fecha_nac" >

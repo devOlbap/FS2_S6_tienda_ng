@@ -48,6 +48,8 @@ export class ProfileComponent {
 
   };
 
+  public thisisfalse :boolean = false;
+
   profileForm !: FormGroup;
 
   /**
@@ -75,6 +77,8 @@ export class ProfileComponent {
       calle: ['', []],
       numeracion: ['', []],
       comuna: ['', []],
+      rol: ['', []],
+
     });
   }
 
@@ -84,9 +88,14 @@ export class ProfileComponent {
 
 
     this.user = this.userService.getUserLog();
+    this.rol = this.userService.getRolUserLog();
+
 
     this.profileForm.patchValue(this.user);
     this.profileForm.get('username')?.disable();
+    this.profileForm.get('rol')?.disable();
+    this.profileForm.get('rol')?.setValue(this.rol.descripcion);
+
     
     if(this.user.username.length === 0){
       this.router.navigate(['/login']);
@@ -103,8 +112,13 @@ export class ProfileComponent {
    */
   update(){
     this.profileForm.get('username')?.enable();
+    this.profileForm.get('rol')?.enable();
+    this.profileForm.get('rol')?.setValue(this.rol.id);
+
     let form : User = this.profileForm.value;
+
     this.profileForm.get('username')?.disable();
+    this.profileForm.get('rol')?.disable();
 
     // console.log(form)
 
@@ -112,18 +126,26 @@ export class ProfileComponent {
 
     if(res !== undefined){
 
-      let n_user : User = res;
+      this.user = res;
+
       alert('Usuario actualizado correctamente');
 
       this.profileForm.reset();
   
-      this.profileForm.patchValue(n_user);
+      this.profileForm.patchValue(this.user);
+      this.profileForm.get('rol')?.disable();
+      this.profileForm.get('rol')?.setValue(this.rol.descripcion);
       return
     }
     alert('Error al actualizar');
     return
   }
- 
+  /**
+   * Funcion que permite limpiar el formulario utilizado para la creacion de nuevos usuarios.
+   */
+  limpiarForm(){
+    this.profileForm.reset();
+  }
 
 
 }
