@@ -55,9 +55,9 @@ export class AdmUsersComponent {
     this.userForm = this.fb.group({
       nombres: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
-      username: ['', [Validators.required]],
-      correo: ['', [Validators.required]],
-      pass: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
+      correo: ['', [Validators.required, Validators.email]],
+      pass: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       rolcito: ['', [Validators.required]],
       fecha_nac: ['', []],
       calle: ['', []],
@@ -259,5 +259,26 @@ export class AdmUsersComponent {
       alert('Usuario: '+usr.nombres+' '+usr.apellidos +'. Eliminado correctamente!.');
     }
     return
+  }
+  /**PROBAR SI FUNCIONA ESTA IDEA */
+  validador(nombre:string){
+
+    if(this.userForm.controls[nombre].errors?.['email']){
+      return "Debe ser un email válido."
+    }
+
+    if(this.userForm.controls[nombre].errors?.['required']){
+      return "Este campo es obligatorio."
+    }
+
+    if(this.userForm.controls[nombre].errors?.['minLength']){
+      return "No puede tener menos de "+this.userForm.controls[nombre].errors?.['minLength'].requiredLength+ " caractéres."
+    }
+    
+    if(this.userForm.controls[nombre].errors?.['maxlength']){
+      return "No puede superar los "+this.userForm.controls[nombre].errors?.['maxlength'].requiredLength+" caractéres.";
+    }
+    
+    return ""
   }
 }
