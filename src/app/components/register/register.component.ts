@@ -47,8 +47,8 @@ export class RegisterComponent {
       apellidos: ['', [Validators.required]],
       username: ['', [Validators.required]],
       correo: ['', [Validators.required]],
-      pass: ['', [Validators.required]],
-      repet_pass: ['', [Validators.required]],
+      pass: ['', [Validators.required, Validators.minLength(8),]],
+      repet_pass: ['', [Validators.required, Validators.minLength(8),]],
       rol: ['', []],
       fecha_nac: ['', [Validators.required]],
       calle: ['', []],
@@ -61,6 +61,27 @@ export class RegisterComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.limpiarForm();
+  }
+
+  hasAtLeastOneNumber(str: string): boolean {
+    const regex = /\d/;
+    return regex.test(str);
+  }
+  isAtLeast15YearsOld(birthDateString: string): boolean {
+    const birthDate = new Date(birthDateString);
+    if (isNaN(birthDate.getTime())) {
+      throw new Error('Fecha de nacimiento no válida');
+    }
+  
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+  
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+  
+    return age >= 15;
   }
 
   /**
@@ -114,14 +135,28 @@ export class RegisterComponent {
       return
     }
 
-    // let rol = this.userService.getRolById(3); // id cliente
-    if(true){
+    if(pass.trim().length<8 && repet_pass.trim().length<8){
+      alert('Las contraseñas deben tener un minimo de 8 caracteres.');
+      return
+    }
+    if(!this.hasAtLeastOneNumber(pass) && !this.hasAtLeastOneNumber(repet_pass)){
+      alert('Las contraseñas deben tener al menos un número.');
+      return
+    }
+
+    if(!this.isAtLeast15YearsOld(this.userForm.get('fecha_nac')?.value)){
+      alert('Debe ser al menos mayor de 15 años de edad!.');
+      return
+    }
+
+    let rol = this.userService.getRolById(3); // id cliente
+    if(rol){
       const n_user :User = {
         id:this.userService.getUsuarios().length+1,
         nombres:this.userForm.get('nombres')?.value,
         apellidos:this.userForm.get('apellidos')?.value,
         username:this.userForm.get('username')?.value,
-        rol: 1,
+        rol: rol.id,
         pass:this.userForm.get('pass')?.value,
         calle:this.userForm.get('calle')?.value,
         numeracion:this.userForm.get('numeracion')?.value,
@@ -130,9 +165,12 @@ export class RegisterComponent {
         comuna:this.userForm.get('comuna')?.value
       }
       this.userService.addUser(n_user);
+      // this.userService.userLog = n_user;
+      // this.userService.rolLog = rol;
 
       alert('Usuario: '+n_user.nombres+' '+n_user.apellidos+' creado exitosamente!');
       this.limpiarForm();
+      this.router.navigate(['/login'])
       return
     }
   }
