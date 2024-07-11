@@ -79,8 +79,13 @@ export class LoginComponent {
 
       let user = this.userService.login(username,password);
 
+      if(user?.rol){
+        let rol = this.userService.getRolById(user?.rol);
+        if(rol){
+          this.userService.rolLog = rol;
+        }        
+      }
       if (user) {
-        
         this.router.navigate(['/home']);
         alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
         this.userService.userLog = user;
