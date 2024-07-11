@@ -115,10 +115,14 @@
                     <tr *ngFor="let user of usuarios">
                         <th scope="row">{{user.id}}</th>
                         <td>{{user.nombres}} {{user.apellidos}}</td>
-                        <td>{{user.rol}}</td>
+                        <td>{{getRolDescripcionById(user.rol)}}</td>
                         <td>{{user.username}}</td>
                         <td>{{user.correo}}</td>
-                        <td><button class="btn btn-outline-success" (click)="mostrarUser(user.id)" > Ver</button></td>
+                        <td>
+                            <button class="btn btn-outline-success" (click)="mostrarUser(user.id)" > Ver</button>
+                            -
+                            <button class="btn btn-outline-danger" (click)="delUser(user.id)" > X</button>
+                        </td>
                     </tr>
                 </tbody>
 
