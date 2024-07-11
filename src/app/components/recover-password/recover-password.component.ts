@@ -59,13 +59,19 @@ export class RecoverPasswordComponent {
       alert('Falta indicar la contraseña nueva');
       return
     }
-    // this.userService.updatePassword(this.username, password);
+    this.userService.updatePassword(this.username, password);
 
     //const user = this.userService.login(this.username, password);
     const user = this.userService.getUsuarios().find(user => user.pass === password)
 
     if (user) {
-      
+
+      this.userService.userLog = user;
+      let rol = this.userService.getRolById(user.rol);
+      if(rol){
+        this.userService.rolLog = rol;
+      }
+
       this.router.navigate(['/home']);
       alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
     } else {
