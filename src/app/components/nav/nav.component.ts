@@ -61,6 +61,7 @@ export class NavComponent {
     //Add 'implements OnInit' to the class.
 
     this.user = this.userService.getUserLog();
+    this.rol = this.userService.getRolUserLog();
     
   }
   /**
