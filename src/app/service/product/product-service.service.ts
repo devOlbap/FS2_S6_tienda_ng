@@ -25,6 +25,12 @@ export class ProductServiceService {
                     +"alt=media&"
                     +"token="+environment.token_productos //token acceso archivo json
   ;
+  private carritoURL = environment.apiUrl
+                    +environment.dominio_app
+                    +"o/carrito.json?"
+                    +"alt=media&"
+                    +"token="+environment.token_carrito //token acceso archivo json
+  ;
 
 
   id_mod: number = 0;
@@ -38,12 +44,23 @@ export class ProductServiceService {
   getJSONdata(): Observable<Product[]> {
     return this.http.get<Product[]>(this.productosURL);
   }
+  getJSONdataCarrito(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.carritoURL);
+  }
 
   getProducts(): Observable<Product[]> {
     return this.getJSONdata().pipe(
       map(products => {
         this.products = products;
         return products;
+      })
+    );
+  }
+  getCarritoJSN(): Observable<Product[]> {
+    return this.getJSONdataCarrito().pipe(
+      map(cart => {
+        this.carrito = cart;
+        return this.carrito;
       })
     );
   }
@@ -61,7 +78,19 @@ export class ProductServiceService {
     // this.getProducts();
 
   }
+  postCarrito(carrito_list:any){
+    this.http.post(this.carritoURL,carrito_list,this.httpOptions)
+    .subscribe(
+      response =>{
+        console.log( 'Actualizado con exito!.');
+      },
+      error=>{
+        console.log( 'Error al actualizar');
+      }
+    )
+    // this.getProducts();
 
+  }
 
 
   addProduct(product: Product) {
@@ -104,14 +133,17 @@ export class ProductServiceService {
 
   addCarrito(product: Product) {
     this.carrito.push(product);
+    this.postCarrito(this.carrito);
   }
 
   deleteProductCarrito(id: number): void {
     this.carrito = this.carrito.filter(prod => prod.id !== id);
+    this.postCarrito(this.carrito);
   }
 
   cleanCarrito(): void {
     this.carrito = [];
+    this.postCarrito(this.carrito);
   }
 
 }
