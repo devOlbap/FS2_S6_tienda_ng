@@ -15,12 +15,12 @@ import { environment } from '../../../environment';
 export class UserServiceService {
 
 
-  // httpOptions = {
-  //   headers : new HttpHeaders({
-  //     "Content-Type":"application/json",
-  //     "Authorization":"Bearer ce572890-912a-4095-9aa8-f36156faf398"
-  //   })
-  // }
+  httpOptions = {
+    headers : new HttpHeaders({
+      "Content-Type":"application/json",
+      "Authorization":"Bearer ce572890-912a-4095-9aa8-f36156faf398"
+    })
+  }
 
   private usuariosURL = environment.apiUrl
                     + environment.dominio_app
@@ -36,7 +36,7 @@ export class UserServiceService {
                     + "token="+environment.token_roles
   ;
   
-  private rolLog:Rol = {
+  public rolLog:Rol = {
     id:0,
     descripcion:'',
   }
@@ -60,7 +60,19 @@ export class UserServiceService {
   private users: User[] = [];
 
 
-  constructor(private router: Router, private http : HttpClient) { }
+  constructor(private router: Router, private http : HttpClient) {
+    this.getDataRoles().subscribe(
+      roles => {
+        this.roles =roles;
+      }
+    )
+
+    this.getDataUsers().subscribe(
+      usuarios => {
+        this.users = usuarios;
+      }
+    );
+   }
 
   
   getJSONdataUsers(): Observable<User[]> {
@@ -76,7 +88,7 @@ export class UserServiceService {
     );
   }
   getJSONdataRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.usuariosURL);
+    return this.http.get<Rol[]>(this.rolesURL);
   }
   getDataRoles(): Observable<Rol[]> {
     return this.getJSONdataRoles().pipe(
@@ -88,10 +100,25 @@ export class UserServiceService {
   }
 
 
+  postUsuarios(lista_usrs:any){
+    this.http.post(this.usuariosURL,lista_usrs,this.httpOptions)
+    .subscribe(
+      response =>{
+        console.log( 'Actualizado con exito!.');
+      },
+      error=>{
+        console.log( 'Error al actualizar');
+      }
+    )
+    // this.getProducts();
+
+  }
+
   updatePassword(username: string, newPassword: string): boolean {
     const userIndex = this.users.findIndex(user => user.username === username);
     if (userIndex !== -1) {
       this.users[userIndex].pass = newPassword;
+      this.postUsuarios(this.users);
       return true;
     }
     return false;
@@ -114,17 +141,13 @@ export class UserServiceService {
   }
 
   getRolById(id:number){
-    let rol = this.roles.find(rol => rol.id === id);
-    if(rol){
-      return rol
-    }
-    return null
+    return this.roles.find(rol => rol.id === id) 
   }
 
   
 
   getRolUserLog(){
-    return this.roles.find(rol => rol.id = this.userLog.rol);
+    return this.rolLog;
   }
 
 
@@ -134,6 +157,12 @@ export class UserServiceService {
 
   addUser(user: User): void {
     this.users.push(user);
+    this.postUsuarios(this.users);
+  }
+
+  deleteUser(id: number): void {
+    this.users = this.users.filter(usr => usr.id !== id);
+    this.postUsuarios(this.users);
   }
 
   getUserById(id: number): User | undefined {
@@ -149,6 +178,11 @@ export class UserServiceService {
   }
 
   setUserBlank(){
+    this.rolLog ={
+      id:0,
+      descripcion:'',
+    }
+    
     this.userLog = {
       id:0,
       nombres:'',
@@ -166,21 +200,17 @@ export class UserServiceService {
   }
   login(username: string, password: string): User | undefined {
 
-    this.getDataRoles().subscribe(
-      roles => {
-        this.roles =roles;
-      }
-    )
-
-    this.getDataUsers().subscribe(
-      usuarios => {
-        this.users = usuarios;
-      }
-    );
 
     const foundUser = this.users.find(user => user.username === username && user.pass === password);
     if (foundUser) {
       this.userLog = foundUser;
+      let rol;
+      if(foundUser.rol){
+        rol = this.getRolById(this.userLog.rol);
+        if(rol){
+          this.rolLog = rol;
+        }
+      }
       return foundUser;
     }
     return undefined; 
@@ -194,7 +224,7 @@ export class UserServiceService {
       this.users[userIndex].nombres   = n_user.nombres;
       this.users[userIndex].apellidos = n_user.apellidos;
       this.users[userIndex].username  = n_user.username;
-      // this.users[userIndex].rol       = n_user.rol;
+      this.users[userIndex].rol       = n_user.rol;
       this.users[userIndex].pass      = n_user.pass;
       this.users[userIndex].calle     = n_user.calle;
       this.users[userIndex].numeracion = n_user.numeracion;
@@ -203,14 +233,7 @@ export class UserServiceService {
       this.users[userIndex].comuna    = n_user.comuna;
 
       let user = this.users[userIndex];
-
-
-
-        
-
-
-
-
+      this.postUsuarios(this.users);
       return user;
     }
     return undefined;
