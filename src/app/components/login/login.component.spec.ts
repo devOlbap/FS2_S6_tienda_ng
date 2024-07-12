@@ -20,4 +20,12 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  //
+  it("should not set userLog before submitting the form.",()=>{
+    component.loginForm.setValue({username:'adm',password:'123'});
+    component.login();
+    expect(window.alert).toHaveBeenCalledWith('Credenciales inválidas. Inicio de sesión fallido.');
+  })
+
+
 });

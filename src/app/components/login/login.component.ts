@@ -38,6 +38,21 @@ export class LoginComponent {
    */
   loginForm !:FormGroup;
 
+  userLog:User =  {
+    id:0,
+    nombres:'',
+    apellidos:'',
+    username:'',
+    rol:0,
+    pass:'',
+    calle:'',
+    numeracion:'',
+    correo:'',
+    fecha_nac:'',
+    comuna:''
+
+  };
+
   users :User[] = [];
   roles :Rol[]=[];
 
@@ -50,7 +65,7 @@ export class LoginComponent {
   ngOnInit(): void {
     
     this.loginForm = this.fb.group({
-      username:['',Validators.required, Validators.minLength(4), Validators.maxLength(16)],
+      username:['',[Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
       password:['',[Validators.required, Validators.minLength(8), Validators.maxLength(16)]]
     })
 
@@ -86,6 +101,7 @@ export class LoginComponent {
         }        
       }
       if (user) {
+        this.userLog = user;
         this.router.navigate(['/home']);
         alert('Inicio de sesión exitoso: '+ user.nombres+' '+user.apellidos);
         this.userService.userLog = user;
