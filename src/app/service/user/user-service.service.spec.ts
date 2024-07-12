@@ -16,6 +16,30 @@ describe('UserServiceService', () => {
   });
 
 
+
+
+
+  it('should get a user by id',()=>{
+
+    service.getDataUsers().subscribe((usrs)=>{
+      service.users = usrs;
+    });
+
+    expect(service.getUserById(1)).toBe({
+      id: 1,
+      nombres: 'Pablo',
+      apellidos: 'Garrido Cid',
+      correo: 'pa.garrido.cid@gmail.com',
+      rol: 1,
+      username: 'admin',
+      pass: 'Pass1010!',
+      calle: 'av el roble',
+      numeracion: '15151',
+      comuna: 'santiago',
+      fecha_nac: '1995-05-06'
+    },);
+  });
+
   it('Should get all users',()=>{
     // let users :User[]= [];
     service.getDataUsers().subscribe((users)=>{

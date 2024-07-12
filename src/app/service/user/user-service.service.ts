@@ -55,9 +55,9 @@ export class UserServiceService {
     comuna:''
 
   };
-  private roles: Rol[] = [];
+  public roles: Rol[] = [];
 
-  private users: User[] = [];
+  public users: User[] = [];
 
 
   constructor(private router: Router, private http : HttpClient) {
