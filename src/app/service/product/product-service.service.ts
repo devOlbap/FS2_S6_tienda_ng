@@ -18,7 +18,6 @@ export class ProductServiceService {
     })
   }
 
-  // private productosURL = "/api/v0/b/tienda-1c239.appspot.com/o/productos.json?alt=media&token=59eece05-8dd6-4757-97da-76918096b401";
   private productosURL = environment.apiUrl
                     +environment.dominio_app
                     +"o/productos.json?"
